@@ -1,0 +1,16 @@
+[package]
+name = "realphysics-watersim"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# A FLIP/PIC fluid. The CPU code here is the reference the GPU shaders mirror, and what the
+# tests run. No dependency, so it stays in step with Horizon's Cargo.lock.
+[dependencies]
+
+[dev-dependencies]
+
+[lib]
+path = "src/lib.rs"
+
+[workspace]

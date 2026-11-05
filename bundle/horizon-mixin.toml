@@ -1,0 +1,76 @@
+# Real Physics for Horizon (Minecraft 26.3): water, sand, trees.
+# Build: horizon-launcher native-build <this folder> --instance <instance> --trust-native-code
+[mod]
+id = "realphysics"
+version = "0.1.0"
+
+[compatibility]
+horizon_revision = "f2f95dad8a1a701424a08bd989168297a7172b36"
+
+[[crate]]
+id = "engine"
+path = "engine"
+
+[[injection]]
+id = "tick"
+hook = "level_tick_post"
+hook_version = 1
+kind = "HEAD"
+helper = "tick.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "dimension", ty = "&str", value = "dimension" },
+]
+
+[[injection]]
+id = "changed"
+hook = "block_changed"
+hook_version = 1
+kind = "HEAD"
+helper = "changed.rs"
+bindings = [
+  { name = "level", ty = "&crate::game::GameLevel<'_>", value = "&*self" },
+  { name = "dimension", ty = "LevelDimension", value = "dimension" },
+  { name = "pos", ty = "BlockPos", value = "pos" },
+  { name = "old", ty = "BlockStateId", value = "old" },
+  { name = "new", ty = "BlockStateId", value = "new" },
+]
+
+[[injection]]
+id = "level_change"
+hook = "fluid_level_change"
+hook_version = 1
+kind = "HEAD"
+helper = "level_change.rs"
+bindings = [
+  { name = "dimension", ty = "LevelDimension", value = "dimension" },
+  { name = "pos", ty = "BlockPos", value = "pos" },
+  { name = "fluid", ty = "&str", value = "fluid" },
+  { name = "cancel", ty = "&mut bool", value = "&mut *cancel" },
+]
+
+[[injection]]
+id = "spread"
+hook = "block_spread"
+hook_version = 1
+kind = "HEAD"
+helper = "spread.rs"
+bindings = [
+  { name = "level", ty = "&crate::game::GameLevel<'_>", value = "&*self" },
+  { name = "dimension", ty = "LevelDimension", value = "dimension" },
+  { name = "kind", ty = "&str", value = "kind" },
+  { name = "from", ty = "BlockPos", value = "from" },
+  { name = "to", ty = "BlockPos", value = "to" },
+  { name = "canceled", ty = "&mut bool", value = "&mut *canceled" },
+]
+
+[[injection]]
+id = "cut"
+hook = "destroy_block"
+hook_version = 1
+kind = "HEAD"
+helper = "cut.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "pos", ty = "[i32; 3]", value = "pos" },
+]

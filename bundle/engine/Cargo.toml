@@ -1,0 +1,11 @@
+[package]
+name = "realphysics-engine"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# No dependencies, so nothing here can slip out of step with Horizon's Cargo.lock.
+[dependencies]
+
+[lints.rust]
+unused = "allow"

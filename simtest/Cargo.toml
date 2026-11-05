@@ -1,0 +1,12 @@
+[package]
+name = "simtest"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+realphysics-engine = { path = "../bundle/engine" }
+
+[lib]
+path = "src/lib.rs"
+
+[workspace]
