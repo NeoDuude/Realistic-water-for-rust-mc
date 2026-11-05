@@ -1,0 +1,14 @@
+[package]
+name = "shadercheck"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+naga = { version = "=30.0.1", features = ["wgsl-in"] }
+
+[[bin]]
+name = "shadercheck"
+path = "src/main.rs"
+
+[workspace]

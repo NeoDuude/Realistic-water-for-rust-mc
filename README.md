@@ -21,8 +21,9 @@ All code here is original. Nothing is copied from any other mod.
 | Falling trees | built, compiles against Horizon, CPU-tested |
 | Sliding sand | built, compiles, CPU-tested |
 | Block water | built, compiles, CPU-tested |
-| FLIP solver core (`watersim/`) | **CPU reference done and tested** (volume, settling, flow) |
-| FLIP GPU shaders + rendering | **not finished** — no on-screen water yet |
+| FLIP solver core (`watersim/`) | **done, CPU-tested** (volume, settling, flow, no clumping) |
+| FLIP GPU shaders (`shaders/`) | **done, all 20 validate with `naga`** |
+| GPU driver Rust + in-game rendering | **not written** — no on-screen water yet |
 
 No machine here has a GPU, and no Minecraft 26.3 copy, so **nothing has run inside the
 game**. First real launch will find bugs. The FLIP GPU water is a work in progress: the
@@ -32,7 +33,9 @@ simulation method is proven on CPU, but the WGSL shaders and the screen-space re
 ## Layout
 
 - `bundle/` — the native mod (trees, sand, block water). Build target.
-- `watersim/` — the FLIP/PIC fluid: CPU reference + tests. The GPU shaders will mirror it.
+- `watersim/` — the FLIP/PIC fluid: CPU reference + tests.
+- `shaders/` — the GPU sim and draw shaders (WGSL). See `ARCHITECTURE.md`.
+- `shadercheck/` — validates every shader with `naga`.
 - `simtest/` — runs the block physics with no game.
 
 ## Build the mod
@@ -43,5 +46,6 @@ Native mods run with your full user rights.
 
 ## Tests
 
-    cd simtest   && cargo test --release
-    cd watersim  && cargo test --release
+    cd simtest     && cargo test --release
+    cd watersim    && cargo test --release
+    cd shadercheck && cargo run        # validate all WGSL

@@ -2,3 +2,4 @@
 **/target
 Cargo.lock
 *.hnmod
+/shadercheck/target
