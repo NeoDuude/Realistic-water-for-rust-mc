@@ -1,0 +1,19 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Water sim tests
+        run: cd watersim && cargo test --release
+      - name: Block physics tests
+        run: cd simtest && cargo test --release
+      - name: Validate every WGSL shader with naga
+        run: cd shadercheck && cargo run --release
+      - name: Package the mod (smoke test)
+        run: python3 scripts/pack.py

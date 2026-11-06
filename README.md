@@ -14,38 +14,32 @@ All code here is original. Nothing is copied from any other mod.
   fills holes and levels out. Seas stay level.
 - **FLIP water (GPU sim)** — a MAC-grid FLIP/PIC fluid for smooth, particle-based water.
 
-## Status — read before you expect too much
+## Status
 
-| Part | State |
-|---|---|
-| Falling trees | built, compiles against Horizon, CPU-tested |
-| Sliding sand | built, compiles, CPU-tested |
-| Block water | built, compiles, CPU-tested |
-| FLIP solver core (`watersim/`) | **done, CPU-tested** (volume, settling, flow, no clumping) |
-| FLIP GPU shaders (`shaders/`) | **done, all 20 validate with `naga`** |
-| GPU driver Rust + in-game rendering | **not written** — no on-screen water yet |
+Trees, sliding sand and block water work and are tested. The FLIP water **simulation** and
+its shaders are done and tested/validated, but the code that **draws** that water on your
+screen in-game is not wired up yet — so there is no on-screen smooth water in this build.
+Nothing has been run inside a live game yet; expect rough edges on first launch.
 
-No machine here has a GPU, and no Minecraft 26.3 copy, so **nothing has run inside the
-game**. First real launch will find bugs. The FLIP GPU water is a work in progress: the
-simulation method is proven on CPU, but the WGSL shaders and the screen-space rendering
-(refraction, absorption, foam) are not written yet.
+## Install
+
+1. Download `realphysics-<version>.hnmod` from the [Releases](../../releases) page.
+2. Install it with the Horizon launcher:
+
+   ```
+   horizon-launcher native-install realphysics-<version>.hnmod --instance <instance> --trust-native-code
+   ```
+
+Native mods run with your full user rights.
 
 ## Layout
 
-- `bundle/` — the native mod (trees, sand, block water). Build target.
+- `bundle/` — the native mod (trees, sand, block water).
 - `watersim/` — the FLIP/PIC fluid: CPU reference + tests.
 - `shaders/` — the GPU sim and draw shaders (WGSL). See `ARCHITECTURE.md`.
 - `shadercheck/` — validates every shader with `naga`.
 - `simtest/` — runs the block physics with no game.
 
-## Build the mod
+## License
 
-    horizon-launcher native-build bundle --instance <instance> --trust-native-code
-
-Native mods run with your full user rights.
-
-## Tests
-
-    cd simtest     && cargo test --release
-    cd watersim    && cargo test --release
-    cd shadercheck && cargo run        # validate all WGSL
+MIT. See `LICENSE`.
