@@ -22,8 +22,13 @@ jobs:
           cd simtest  && cargo test --release && cd ..
       - name: Validate shaders
         run: cd shadercheck && cargo run --release
-      - name: Build mod packages
+      - name: Build release files
         run: python3 scripts/pack.py
+      - name: Check the shader pack with Horizon's own checker
+        run: |
+          cargo install --locked --git https://github.com/ludovic111/horizon \
+            --rev f4dcf8a2fb4a68b2d28422f4d34d2be2970e26bd horizon-shader-api --bin horizon-shader
+          horizon-shader check dist/real_water-*.hshader
       - name: Decide the tag
         id: tag
         run: |
@@ -37,9 +42,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "${{ steps.tag.outputs.name }}" \
-            dist/realphysics-*.mrpack \
-            dist/realphysics-*.zip \
-            dist/realphysics-*.hshader \
+            dist/real_water-*.hshader \
+            dist/realphysics-*.hnmod \
             --title "Real Physics ${{ steps.tag.outputs.name }}" \
-            --prerelease \
-            --notes "Preview build — realistic water, falling trees, sliding sand. Three formats included: .mrpack, .zip, .hshader. Import whichever your Horizon launcher accepts."
+            --latest \
+            --notes "**Water look:** drag \`real_water-*.hshader\` onto the Horizon launcher, then pick Real Water in Options > Video Settings > Shaders > Shader Packs. **Trees, sand, water physics:** launcher Mods page > Add from GitHub > paste this repo's link > Build (preview)."

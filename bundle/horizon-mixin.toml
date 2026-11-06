@@ -2,7 +2,7 @@
 # Build: horizon-launcher native-build <this folder> --instance <instance> --trust-native-code
 [mod]
 id = "realphysics"
-version = "0.1.0"
+version = "0.3.0"
 
 [compatibility]
 horizon_revision = "f2f95dad8a1a701424a08bd989168297a7172b36"

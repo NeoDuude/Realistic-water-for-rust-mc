@@ -1,0 +1,179 @@
+schema = 1
+id = "real_water"
+name = "Real Water"
+version = "0.3.0"
+api = "0.1"
+description = "Rolling waves, real reflections and refraction, deep-water colour, foaming waterfalls, shore foam, rain ripples, sun glint, sun shadows and underwater caustics."
+authors = ["NeoDuude"]
+license = "MIT"
+shared = ["waves.wgsl"]
+
+[vertex]
+file = "vertex.wgsl"
+
+[material]
+file = "material.wgsl"
+
+[[post]]
+file = "post/underwater.wgsl"
+name = "Underwater"
+
+[[post]]
+file = "post/grade.wgsl"
+name = "Colour grade"
+
+[shadow]
+resolution = 2048
+distance = 128.0
+option = "shadows"
+resolution_option = "shadow_resolution"
+
+[[pages]]
+id = "main"
+name = "Real Water"
+items = ["page:water", "page:light", "page:look"]
+
+[[pages]]
+id = "water"
+name = "Water"
+description = "Waves, reflections, refraction and foam."
+items = ["wave_height", "wave_speed", "reflections", "refraction", "clarity", "foam", "sun_glint", "caustics"]
+
+[[pages]]
+id = "light"
+name = "Light"
+description = "Sun shadows."
+items = ["shadows", "shadow_resolution", "shadow_strength"]
+
+[[pages]]
+id = "look"
+name = "Look"
+description = "Underwater fog and the colour grade."
+items = ["underwater_fog", "saturation", "contrast"]
+
+[[options]]
+id = "wave_height"
+name = "Wave height"
+description = "How far the water surface rises and falls, in blocks."
+type = "float"
+default = 0.07
+min = 0.0
+max = 0.2
+step = 0.01
+
+[[options]]
+id = "wave_speed"
+name = "Wave speed"
+type = "float"
+default = 1.0
+min = 0.0
+max = 3.0
+step = 0.1
+
+[[options]]
+id = "reflections"
+name = "Reflections"
+description = "Mirror the world in still water."
+type = "bool"
+default = true
+
+[[options]]
+id = "refraction"
+name = "Refraction"
+description = "How much waves bend what you see under the water."
+type = "float"
+default = 0.5
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "clarity"
+name = "Clarity"
+description = "How far you see into the water before it turns deep blue."
+type = "float"
+default = 0.6
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "foam"
+name = "Foam"
+description = "White water on waterfalls, fast flows and shores."
+type = "float"
+default = 0.7
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "sun_glint"
+name = "Sun glint"
+type = "float"
+default = 1.0
+min = 0.0
+max = 2.0
+step = 0.1
+
+[[options]]
+id = "caustics"
+name = "Caustics"
+description = "Rippling light on the ground under sunlit water."
+type = "float"
+default = 0.6
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "shadows"
+name = "Sun shadows"
+type = "bool"
+default = true
+
+[[options]]
+id = "shadow_resolution"
+name = "Shadow quality"
+type = "choice"
+values = ["1024", "2048", "4096"]
+default = "2048"
+
+[[options]]
+id = "shadow_strength"
+name = "Shadow darkness"
+type = "float"
+default = 0.45
+min = 0.0
+max = 0.9
+step = 0.05
+
+[[options]]
+id = "underwater_fog"
+name = "Underwater fog"
+type = "float"
+default = 1.0
+min = 0.0
+max = 2.0
+step = 0.1
+
+[[options]]
+id = "saturation"
+name = "Saturation"
+type = "float"
+default = 1.08
+min = 0.0
+max = 2.0
+step = 0.02
+
+[[options]]
+id = "contrast"
+name = "Contrast"
+type = "float"
+default = 1.05
+min = 0.5
+max = 1.5
+step = 0.01
+
+[budget]
+gpu_ms = 2.5

@@ -1,39 +1,41 @@
 # Real Physics for Horizon
 
-Native mod for **Horizon** (Minecraft: Java Edition 26.3, rewritten in Rust).
-Pinned to Horizon commit `f2f95dad8a1a701424a08bd989168297a7172b36`.
+Realistic water, falling trees and sliding sand for **Horizon** (Minecraft: Java Edition 26.3,
+rewritten in Rust).
 
 All code here is original. Nothing is copied from any other mod.
 
-## What it does
+## Two parts
 
-- **Falling trees** — cut the last grounded log and the tree topples away from you,
-  landing as a felled trunk. Logs hurt what they land on. Log walls stay up.
-- **Sliding sand** — sand and gravel slump to about 45°. Wet sand holds a steeper face.
-- **Volume water (blocks)** — water that keeps its volume: a bucket spreads thin, falls,
-  fills holes and levels out. Seas stay level.
-- **FLIP water (GPU sim)** — a MAC-grid FLIP/PIC fluid for smooth, particle-based water.
+**Real Water** (`real_water-<version>.hshader`) — a Horizon shader pack:
 
-## Status
+- rolling waves that really move the water surface
+- real reflections of the world, Fresnel-correct
+- refraction: see the bottom, bent by the waves
+- deep water turns blue with depth (red light goes first)
+- foaming waterfalls, white water on fast flows, foam at the shore
+- sun glint and a moon path, rain ripples
+- sun shadows, and rippling caustic light on the ground under water
+- underwater fog and wobble
+- options for all of it (Shader Options...)
 
-Trees, sliding sand and block water work and are tested. The FLIP water **simulation** and
-its shaders are done and tested/validated, but the code that **draws** that water on your
-screen in-game is not wired up yet — so there is no on-screen smooth water in this build.
-Nothing has been run inside a live game yet; expect rough edges on first launch.
+**Real Physics** (`realphysics-<version>.hnmod`) — a native mod:
+
+- **Falling trees** — cut the last grounded log and the tree topples away from you.
+- **Sliding sand** — sand and gravel slump to about 45°.
+- **Volume water** — a bucket spreads thin, falls, fills holes and levels out.
 
 ## Install
 
-1. Go to the [Releases](../../releases) page.
-2. Download whichever format your Horizon launcher accepts: `.mrpack`, `.zip`, or `.hshader`.
-3. Drag the file into the Horizon launcher to import it.
+Get both files from the [Releases](../../releases) page.
 
-## Layout
+- **Water look:** drag `real_water-<version>.hshader` onto the Horizon launcher. In the game:
+  Options > Video Settings > Shaders > Shader Packs > **Real Water (Horizon)**.
+- **Trees, sand, water physics:** in the launcher, Mods page > **Add from GitHub**, paste
+  `https://github.com/NeoDuude/Realistic-water-for-rust-mc`, then **Build**. The first native
+  build downloads Rust and takes a while.
 
-- `bundle/` — the native mod (trees, sand, block water).
-- `watersim/` — the FLIP/PIC fluid: CPU reference + tests.
-- `shaders/` — the GPU sim and draw shaders (WGSL). See `ARCHITECTURE.md`.
-- `shadercheck/` — validates every shader with `naga`.
-- `simtest/` — runs the block physics with no game.
+The shader pack works on its own. The native mod is preview: not yet run in a live game.
 
 ## License
 
