@@ -23,14 +23,9 @@ Nothing has been run inside a live game yet; expect rough edges on first launch.
 
 ## Install
 
-1. Download `realphysics-<version>.hnmod` from the [Releases](../../releases) page.
-2. Install it with the Horizon launcher:
-
-   ```
-   horizon-launcher native-install realphysics-<version>.hnmod --instance <instance> --trust-native-code
-   ```
-
-Native mods run with your full user rights.
+1. Go to the [Releases](../../releases) page.
+2. Download whichever format your Horizon launcher accepts: `.mrpack`, `.zip`, or `.hshader`.
+3. Drag the file into the Horizon launcher to import it.
 
 ## Layout
 

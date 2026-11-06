@@ -22,7 +22,7 @@ jobs:
           cd simtest  && cargo test --release && cd ..
       - name: Validate shaders
         run: cd shadercheck && cargo run --release
-      - name: Build the .hnmod
+      - name: Build mod packages
         run: python3 scripts/pack.py
       - name: Decide the tag
         id: tag
@@ -36,7 +36,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ steps.tag.outputs.name }}" dist/realphysics-*.hnmod \
+          gh release create "${{ steps.tag.outputs.name }}" \
+            dist/realphysics-*.mrpack \
+            dist/realphysics-*.zip \
+            dist/realphysics-*.hshader \
             --title "Real Physics ${{ steps.tag.outputs.name }}" \
             --prerelease \
-            --notes "Preview build. **Working:** falling trees, sliding sand, volume-keeping block water. **Included but not yet drawn in-game:** the FLIP GPU water (simulation + shaders are done and tested/validated, the on-screen rendering is not wired up yet). Nothing has run in a live game yet — expect rough edges. Install: \`horizon-launcher native-install realphysics-*.hnmod --instance <instance> --trust-native-code\`."
+            --notes "Preview build — realistic water, falling trees, sliding sand. Three formats included: .mrpack, .zip, .hshader. Import whichever your Horizon launcher accepts."
